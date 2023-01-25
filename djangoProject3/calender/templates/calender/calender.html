@@ -1,10 +1,22 @@
 {% extends 'calender/base.html' %}
 
 {% block content %}
-<div class="clearfix">
-	<a class="btn btn-info left" href="{% url 'calender:calendar' %}?{{ prev_month }}"> Previous Month </a>
-	<a class="btn btn-info right" href="{% url 'calender:calendar' %}?{{ next_month }}"> Next Month </a>
+
+
+<div class="head_page">
+    <div class="panel">
+    </div>
+    <div class="head_toolbar">
+        <img src="../../static/calender/images/logo.jpg" alt="heyo" width="200px" height="70px" class="logo">
+    </div>
+    <div class="base_panel">
+        <div class="clearfix">
+            <a class="btn btn-info left" href="{% url 'calender:calendar' %}?{{ prev_month }}"> Previous Month </a>
+            <a class="btn btn-info right" href="{% url 'calender:calendar' %}?{{ next_month }}"> Next Month </a>
+        </div>
+    {{ calendar }}
+    </div>
 </div>
 
-{{ calendar }}
+
 {% endblock %}
