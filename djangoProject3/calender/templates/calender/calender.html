@@ -7,8 +7,15 @@
     <div class="panel">
     </div>
     <div class="head_toolbar">
-        <img src="../../static/calender/images/logo.jpg" alt="heyo" width="200px" height="70px" class="logo">
+        {% if request.user.is_authenticated %}
+            <img src="../../static/calender/images/logo.jpg" alt="heyo" width="200px" height="70px" class="logo">
+            <li class="last"> {{user.username}} | <a href="{% url 'calender:logout' %}">Выйти</a></li>
+        {% else %}
+            <img src="../../static/calender/images/logo.jpg" alt="heyo" width="200px" height="70px" class="logo">
+            <li class="last"><a href="{% url 'calender:register' %}">Регистрация</a> | <a href="{% url 'calender:login' %}">Войти</a></li>
+        {% endif %}
     </div>
+    {% if request.user.is_authenticated %}
     <div class="base_panel">
         <div class="clearfix">
             <a class="btn btn-info left" href="{% url 'calender:calendar' %}?{{ prev_month }}"> Previous Month </a>
@@ -16,6 +23,7 @@
         </div>
     {{ calendar }}
     </div>
+    {% endif %}
 </div>
 
 

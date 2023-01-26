@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" href="{% static 'calender/css/register.css' %}" rel="stylesheet"/>
+
+</head>
+<body>
+{% block content %}
+<h1>{{title}}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="container">
+        <p class="heading">Login In</p>
+
+            {% for f in form %}
+                <div class="box">
+                    <p><label for="{{ f.id_for_label }}"> {{ f.label }}</label></p>
+                    <div>{{ f }}</div>
+                </div>
+                <div class="form-error">{{ f.errors }}</div>
+
+            {% endfor %}
+
+        <input class="loginBtn" type="submit" value="Register">
+        <p class="text">Have an account? <a href="{% url 'calender:login' %}">Login</a></p>
+
+    </div>
+</form>
+{% endblock %}
+</body>
+</html>
+
+

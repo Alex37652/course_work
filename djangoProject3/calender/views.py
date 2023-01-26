@@ -1,12 +1,17 @@
 import calendar
 from datetime import datetime, date, timedelta
-from django.shortcuts import render, get_object_or_404
+
+from django.contrib.auth import logout
+from django.contrib.auth.models import Group
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.utils.safestring import mark_safe
+from django.views.generic import CreateView
 
-from .forms import EventForm
+from .forms import EventForm, RegisterUserForm, LoginUserForm
 from .models import *
 from .utils import Calendar
 
@@ -39,11 +44,13 @@ def get_date(req_day):
         return date(year, month, day=1)
     return datetime.today()
 
+
 def prev_month(d):
     first = d.replace(day=1)
     prev_month = first - timedelta(days=1)
     month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
     return month
+
 
 def next_month(d):
     days_in_month = calendar.monthrange(d.year, d.month)[1]
@@ -65,3 +72,39 @@ def event(request, event_id=None):
         form.save()
         return HttpResponseRedirect(reverse('calender:calendar'))
     return render(request, 'calender/event.html', {'form': form})
+
+
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'calender/register.html'
+    success_url = reverse_lazy('login')
+
+    def post(self, request, *args, **kwargs):
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            # user_group = Category.objects.get(category=form.cleaned_data['group'])
+            # user.groups.add(user_group)
+            return redirect('calender:calendar')
+        else:
+            return render(request, self.template_name, {'form': form})
+
+
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = 'calender/login.html'
+
+    def get_success_url(self):
+        user_name = self.request.POST['username']
+        user_group = CustomUser.objects.filter(username=user_name)
+        print(user_group[0].group)
+        if user_group[0].group == 'Менеджер':
+            return reverse_lazy('calender:calendar') # view for manager
+        else:
+            return reverse_lazy('calender:calendar')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('calender:login')

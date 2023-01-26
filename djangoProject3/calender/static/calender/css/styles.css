@@ -100,4 +100,12 @@ a {
   padding-left: 10px;
 }
 
+.last {
+  display: inline-block;
+  float: right;
+  padding-top: 18px;
+  padding-right: 10px;
+  font-size: 20px;
+}
+
 
