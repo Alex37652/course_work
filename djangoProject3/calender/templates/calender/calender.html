@@ -4,18 +4,20 @@
 
 
 <div class="head_page">
-    <div class="panel">
-    </div>
+
     <div class="head_toolbar">
         {% if request.user.is_authenticated %}
-            <img src="../../static/calender/images/logo.jpg" alt="heyo" width="200px" height="70px" class="logo">
+            <img src="../../static/calender/images/logo.jpg" alt="heyo" width="245px" height="70px" class="logo">
             <li class="last"> {{user.username}} | <a href="{% url 'calender:logout' %}">Выйти</a></li>
         {% else %}
-            <img src="../../static/calender/images/logo.jpg" alt="heyo" width="200px" height="70px" class="logo">
+            <img src="../../static/calender/images/logo.jpg" alt="heyo" width="245px" height="70px" class="logo">
             <li class="last"><a href="{% url 'calender:register' %}">Регистрация</a> | <a href="{% url 'calender:login' %}">Войти</a></li>
         {% endif %}
     </div>
     {% if request.user.is_authenticated %}
+    <div class="panel">
+        <a class="btn btn-info left panel-first" href="{% url 'calender:event_new' %}"> Create new Event </a>
+    </div>
     <div class="base_panel">
         <div class="clearfix">
             <a class="btn btn-info left" href="{% url 'calender:calendar' %}?{{ prev_month }}"> Previous Month </a>

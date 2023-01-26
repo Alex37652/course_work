@@ -72,7 +72,7 @@ a {
 
 .head_toolbar {
   width: 100%;
-  height: 60px;
+  height: 70px;
   border: 1px black;
 }
 
@@ -83,15 +83,15 @@ a {
 .panel {
   float: left;
   display: inline-block;
-  height: 100%;
-  width: 10%;
+  min-height: 1010px;
+  width: 15%;
   border: 1px black;
-  position: fixed;
+  background-color: #dedede;
 }
 
 .base_panel {
   float: left;
-  margin-left: 15%;
+  margin-left: 5%;
   width: 80%;
   display: inline-block;
 }
@@ -108,4 +108,7 @@ a {
   font-size: 20px;
 }
 
-
+.panel-first {
+  margin-top: 200px;
+  margin-left: 10px;
+}
