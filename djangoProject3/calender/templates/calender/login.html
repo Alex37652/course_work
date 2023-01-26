@@ -1,24 +1,54 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link type="text/css" href="{% static 'calender/css/register.css' %}" rel="stylesheet"/>
 </head>
 <body>
 {% block content %}
-<h1>{{title}}</h1>
+    <h1>{{ title }}</h1>
 
-<form method="post">
-    {% csrf_token %}
 
-{% for f in form %}
-<p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-<div class="form-error">{{ f.errors }}</div>
-{% endfor %}
+    <section class="sign-in">
+        <div class="container">
+            <div class="signin-content">
+                <div class="signin-image">
+                    <figure><img src="../../static/calender/images/signin-image.jpg" alt="sing up image"></figure>
+                    <a href="{% url 'calender:register' %}" class="signup-image-link">Create an account</a>
+                </div>
 
-    <button type="submit">Авторизоваться</button>
-</form>
-    <p><a href="{% url 'calender:calendar' %}">Назад</a></p>
+                <div class="signin-form">
+                    <h2 class="form-title">Sign up</h2>
+                    <form method="post" class="register-form" id="login-form">
+                        {% csrf_token %}
+
+                        {% for f in form %}
+                            <div class="form-group">
+                                <label for="{{ f.id_for_label }}"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                {{ f }}
+                            </div>
+                            <div class="form-error">{{ f.errors }}</div>
+                        {% endfor %}
+
+                        <div class="form-group form-button">
+                            <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+                        </div>
+                    </form>
+                    <div class="social-login">
+                        <span class="social-label">Or login with</span>
+                        <ul class="socials">
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
 {% endblock %}
 </body>
